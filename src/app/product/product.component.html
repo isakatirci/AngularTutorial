@@ -1,0 +1,47 @@
+<h3 *ngIf="products; else noProduct">{{ title }}</h3>
+
+<form>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      id="exampleInputEmail1"
+      name="filterText"
+      aria-describedby="emailHelp"
+      [(ngModel)]="filterText"
+    />
+    <small id="emailHelp" *ngIf="filterText" class="form-text text-muted">
+      Şuan aradığınız:
+      <strong>{{ filterText }} </strong></small
+    >
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div class="row">
+  <ng-template #noProduct>
+    <div class="alert alert-danger" role="alert">Bu kategoride ürün yoktur</div>
+  </ng-template>
+  <div
+    *ngFor="let product of products | productFilter: filterText"
+    class="col-md-3"
+  >
+    <div class="card" style="width: 18rem">
+      <img [src]="product.imageUrl" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ product.name }} {{ product.price | currency: "TL":true:"1.2-5" }}
+        </h5>
+        <p class="card-text">
+          {{ product.description }}
+        </p>
+        <a
+          href="javascript:;"
+          (click)="sepeteEkle(product)"
+          class="btn btn-primary"
+          >Sepete Ekle</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
